@@ -41,11 +41,6 @@ public class DirectRestServiceTestGwt extends GWTTestCase {
         void getSomething();
     }
 
-    static interface DirectRestServiceWithStringReturn extends DirectRestService {
-        @GET @Path("/string")
-        String getString();
-    }
-    
     public void testCallingMethodsDirectlyShouldFail() {
         delayTestFinish(10000);
         DirectExampleService directExampleService = GWT.create(DirectExampleService.class);
@@ -79,6 +74,27 @@ public class DirectRestServiceTestGwt extends GWTTestCase {
         }).call(directExampleService).getExampleDtos("3");
     }
 
+    public void testRegexPathParamCall() {
+        delayTestFinish(10000);
+        DirectExampleService directExampleService = GWT.create(DirectExampleService.class);
+
+        Resource resource = new Resource(GWT.getModuleBaseURL() + "api");
+        ((RestServiceProxy) directExampleService).setResource(resource);
+
+        REST.withCallback(new MethodCallback<Integer>() {
+            @Override
+            public void onSuccess(Method method, Integer response) {
+                assertEquals((Integer) 456, response);
+                finishTest();
+            }
+
+            @Override
+            public void onFailure(Method method, Throwable e) {
+                fail(e.getMessage());
+            }
+            }).call(directExampleService).getRegexMultiParams(123, 456);
+    }
+
     public void testVoidCall() {
         delayTestFinish(10000);
         DirectExampleService directExampleService = GWT.create(DirectExampleService.class);
@@ -107,62 +123,6 @@ public class DirectRestServiceTestGwt extends GWTTestCase {
     public void testPrimitiveDirectRestService() {
         PrimitiveDirectRestService primitiveDirectService = GWT.create(PrimitiveDirectRestService.class);
         assertNotNull(primitiveDirectService);
-    }
-
-    /**
-     * Verify that a DirectRestService method with a String return type will
-     * succeed when using a TextCallback.
-     */
-    public void testStringCallWithProperCallback() {
-        delayTestFinish(10000);
-        DirectRestServiceWithStringReturn stringService = GWT.create(DirectRestServiceWithStringReturn.class);
-
-        Resource resource = new Resource(GWT.getModuleBaseURL() + "api");
-        ((RestServiceProxy) stringService).setResource(resource);
-
-        REST.withCallback(new TextCallback() {
-            @Override
-            public void onSuccess(Method method, String response) {
-                assertEquals("a string", response);
-                finishTest();
-            }
-
-            @Override
-            public void onFailure(Method method, Throwable e) {
-                fail(e.getMessage());
-            }
-        }).call(stringService).getString();
-    }
-
-    /**
-     * Verify that a DirectRestService method with a String return type will
-     * fail when using a callback that is not a TextCallback.
-     */
-    public void testStringCallWithImproperCallback() {
-        delayTestFinish(10000);
-        DirectRestServiceWithStringReturn stringService = GWT.create(DirectRestServiceWithStringReturn.class);
-
-        Resource resource = new Resource(GWT.getModuleBaseURL() + "api");
-        ((RestServiceProxy) stringService).setResource(resource);
-
-        try {
-            REST.withCallback(new MethodCallback<String>() {
-                @Override
-                public void onSuccess(Method method, String response) {
-                    assertEquals("a string", response);
-                    finishTest();
-                }
-
-                @Override
-                public void onFailure(Method method, Throwable e) {
-                    fail(e.getMessage());
-                }
-            }).call(stringService).getString();
-            fail("Non-TextCallback was permitted");
-        } catch (Exception e) {
-            assertTrue(e.getMessage().contains("TextCallback"));
-            finishTest();
-        }
     }
 
 }

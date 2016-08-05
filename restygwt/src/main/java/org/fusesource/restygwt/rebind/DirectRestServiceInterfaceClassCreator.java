@@ -20,7 +20,6 @@ package org.fusesource.restygwt.rebind;
 import java.lang.annotation.Annotation;
 
 import org.fusesource.restygwt.client.RestService;
-import org.fusesource.restygwt.client.TextCallback;
 import org.fusesource.restygwt.rebind.util.AnnotationCopyUtil;
 import org.fusesource.restygwt.rebind.util.AnnotationUtils;
 import org.fusesource.restygwt.rebind.util.OnceFirstIterator;
@@ -32,7 +31,6 @@ import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JParameter;
 import com.google.gwt.core.ext.typeinfo.JPrimitiveType;
-import com.google.gwt.core.ext.typeinfo.JType;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 
 /**
@@ -58,6 +56,8 @@ public class DirectRestServiceInterfaceClassCreator extends DirectRestBaseSource
 
     @Override
     protected void generate() throws UnableToCompleteException {
+        super.generate();
+
         for (JMethod method : source.getInheritableMethods()) {
             p(getAnnotationsAsString(method.getAnnotations()));
             p("void " + method.getName() + "(" + getMethodParameters(method) + getMethodCallback(method) + ");");
@@ -80,17 +80,16 @@ public class DirectRestServiceInterfaceClassCreator extends DirectRestBaseSource
     }
 
     private String getMethodCallback(JMethod method) {
-        String callbackType;
-        JType returnType = method.getReturnType();
-        if (returnType.isPrimitive() != null) {
-            JPrimitiveType primitiveType = returnType.isPrimitive();
-            callbackType = "org.fusesource.restygwt.client.MethodCallback<" + primitiveType.getQualifiedBoxedSourceName() + ">";
-        } else if (returnType.getQualifiedSourceName().equals(String.class.getName())) {
-            callbackType = TextCallback.class.getName();
-        } else {
-            callbackType = "org.fusesource.restygwt.client.MethodCallback<" + returnType.getParameterizedQualifiedSourceName() + ">";
+        if (method.getReturnType().isPrimitive() != null) {
+            JPrimitiveType primitiveType = method.getReturnType().isPrimitive();
+            return "org.fusesource.restygwt.client.MethodCallback<" + primitiveType.getQualifiedBoxedSourceName() + "> callback";
         }
-        return callbackType + " callback";
+        final String returnType = method.getReturnType().getParameterizedQualifiedSourceName();
+        if (isOverlayMethod(method)) {
+            return "org.fusesource.restygwt.client.OverlayCallback<" + returnType + "> callback";
+        } else {
+            return "org.fusesource.restygwt.client.MethodCallback<" + returnType + "> callback";
+        }
     }
 
     private String getAnnotationsAsString(Annotation[] annotations) {

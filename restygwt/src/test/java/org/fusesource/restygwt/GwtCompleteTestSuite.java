@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009-2015 the original author or authors.
+ * Copyright (C) 2009-2016 the original author or authors.
  * See the notice.md file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,9 +18,7 @@
 
 package org.fusesource.restygwt;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-
+import org.fusesource.restygwt.client.basic.BasicGwtJacksonTestGwt;
 import org.fusesource.restygwt.client.basic.BasicTestGwt;
 import org.fusesource.restygwt.client.basic.CacheCallbackTestGwt;
 import org.fusesource.restygwt.client.basic.CachingTestGwt;
@@ -47,11 +45,14 @@ import org.fusesource.restygwt.client.codec.InnerClassesEncoderDecoderTestGwt;
 import org.fusesource.restygwt.client.codec.JsonIgnoreEncoderTestGwt;
 import org.fusesource.restygwt.client.codec.MapInRestServiceEncoderDecoderTestGwt;
 import org.fusesource.restygwt.client.codec.PolymorphicEncoderDecoderTestGwt;
-import org.fusesource.restygwt.client.complex.AutodetectPlainTextStringEncoderDecoderTestGwt;
 import org.fusesource.restygwt.client.complex.JsonTypeIdResolver;
-import org.fusesource.restygwt.client.complex.StringEncoderDecoderTestGwt;
+import org.fusesource.restygwt.client.complex.string.StringEncoderDecoderAutodetectPlainTextTestGwt;
+import org.fusesource.restygwt.client.complex.string.StringEncoderDecoderTestGwt;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
 
 /**
  *
@@ -78,6 +79,7 @@ public class GwtCompleteTestSuite extends TestCase {
     public static Test suite() {
         GWTTestSuite suite = new GWTTestSuite("all GwtTestCases but AnnotationResolver");
 
+        suite.addTestSuite(BasicGwtJacksonTestGwt.class);
         suite.addTestSuite(BasicTestGwt.class);
         // keep the cache-callback at the beginning to get it pass
         // TODO why ? and what goes wrong when at located at the end ?
@@ -113,7 +115,7 @@ public class GwtCompleteTestSuite extends TestCase {
         suite.addTestSuite(JsonpTestGwt.class);
 
         suite.addTestSuite(StringEncoderDecoderTestGwt.class);
-        suite.addTestSuite(AutodetectPlainTextStringEncoderDecoderTestGwt.class);
+        suite.addTestSuite(StringEncoderDecoderAutodetectPlainTextTestGwt.class);
 
         return suite;
     }
