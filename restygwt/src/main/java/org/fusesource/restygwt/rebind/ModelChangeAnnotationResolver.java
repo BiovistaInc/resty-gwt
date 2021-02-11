@@ -45,6 +45,7 @@ import org.fusesource.restygwt.client.cache.Domain;
  */
 public class ModelChangeAnnotationResolver implements AnnotationResolver {
 
+    @SuppressWarnings("unlikely-arg-type")
     @Override
     public Map<String, String[]> resolveAnnotation(TreeLogger logger, JClassType source, JMethod method,
                                                    String restMethod) throws UnableToCompleteException {
