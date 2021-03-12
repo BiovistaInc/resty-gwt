@@ -249,7 +249,7 @@ public class JsonEncoderDecoderClassCreator extends BaseSourceCreator {
         i(-1).p("}");
         p();
         for (Subtype type : assignableSubTypes) {
-	        p("private "+ JSON_VALUE_CLASS + " " + getEncodeMethodName(type) + "( " + source.getParameterizedQualifiedSourceName() + " value) {").i(1);
+	        p("private " + JSON_VALUE_CLASS + " " + getEncodeMethodName(type) + "( " + source.getParameterizedQualifiedSourceName() + " value) {").i(1);
 	        {
 	            buildEncodePossibleTypeLogicBody(type, typeInfo, classStyle, railsWrapperName, classType);
 	            i(-1).p("}");
@@ -310,8 +310,8 @@ public class JsonEncoderDecoderClassCreator extends BaseSourceCreator {
                  }
              }
 
-             p(possibleType.clazz.getParameterizedQualifiedSourceName() + " parseValue = (" +
-                 possibleType.clazz.getParameterizedQualifiedSourceName() + ")value;");
+             p(possibleType.clazz.getQualifiedSourceName() + " parseValue = (" +
+                     possibleType.clazz.getQualifiedSourceName() + ")value;");
 
              for (final JField field : fields) {
 
@@ -364,7 +364,6 @@ public class JsonEncoderDecoderClassCreator extends BaseSourceCreator {
 
                              Style style = jsonAnnotation != null ? jsonAnnotation.style() : classStyle;
                              String expression = locator.encodeExpression(field.getType(), fieldExpr, style);
-
 
                              if (null != field.getType().isEnum()) {
                                  p("if(isNotNullAndCheckDefaults(" + fieldExpr + ", rc, " + wrap(jsonName) +
@@ -574,8 +573,8 @@ public class JsonEncoderDecoderClassCreator extends BaseSourceCreator {
             }
 
             if (orderedFields == null) {
-                p("" + possibleType.clazz.getParameterizedQualifiedSourceName() + " rc = new " +
-                    possibleType.clazz.getParameterizedQualifiedSourceName() + "();");
+                p("" + possibleType.clazz.getQualifiedSourceName() + " rc = new " +
+                        possibleType.clazz.getQualifiedSourceName() + "();");
             }
 
             for (final JField field : getFields(possibleType.clazz)) {

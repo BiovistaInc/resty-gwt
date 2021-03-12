@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-
+<!DOCTYPE module PUBLIC "GWT DTD" "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module>
 
     <inherits name="com.google.gwt.http.HTTP"/>
@@ -26,8 +26,6 @@
     <inherits name='com.google.gwt.jsonp.Jsonp'/>
     <inherits name="com.google.gwt.xml.XML"/>
     <inherits name='com.google.gwt.logging.LoggingDisabled'/>
-
-    <inherits name="com.github.nmorel.gwtjackson.GwtJackson"/>
 
 
     <replace-with class="org.fusesource.restygwt.emulated.JsonTypeInfo">

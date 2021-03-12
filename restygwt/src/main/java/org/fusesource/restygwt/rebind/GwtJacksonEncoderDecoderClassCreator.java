@@ -21,7 +21,6 @@ package org.fusesource.restygwt.rebind;
 import static org.fusesource.restygwt.rebind.util.ClassSourceFileComposerFactoryImportUtil.addFuseSourceStaticImports;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.github.nmorel.gwtjackson.client.ObjectMapper;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -46,7 +45,7 @@ public class GwtJacksonEncoderDecoderClassCreator extends BaseSourceCreator {
     private static final String GWT_JACKSON_ENCODER_SUFFIX = "_Gen_GwtJackEncDec_";
     private static final String GWT_JACKSON_MAPPER_IF = "GwtJackMapper";
 
-    private static final String OBJECT_MAPPER_CLASS = ObjectMapper.class.getName();
+    private static final String OBJECT_MAPPER_CLASS = "ObjectMapper";
 
     protected static final String JSON_VALUE_CLASS = JSONValue.class.getName();
     protected static final String JSON_STRING_CLASS = JSONString.class.getName();
@@ -62,7 +61,7 @@ public class GwtJacksonEncoderDecoderClassCreator extends BaseSourceCreator {
     public void generate() throws UnableToCompleteException {
         //Forcing class to be loaded
         try {
-            Class.forName(ObjectMapper.class.getName());
+            Class.forName(OBJECT_MAPPER_CLASS);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
