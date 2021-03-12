@@ -32,12 +32,14 @@ import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JParameterizedType;
 import com.google.gwt.core.ext.typeinfo.JPrimitiveType;
 import com.google.gwt.core.ext.typeinfo.JType;
+import com.google.gwt.core.ext.typeinfo.JTypeParameter;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.xml.client.Document;
 
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -412,7 +414,16 @@ public class JsonEncoderDecoderInstanceLocator implements EncoderDecoderLocator 
         if (parameterizedType == null || parameterizedType.getTypeArgs() == null) {
             return null;
         }
-        return parameterizedType.getTypeArgs();
+        final Collection<JClassType> classTypes = new ArrayList<JClassType>();
+        for (JClassType jc : parameterizedType.getTypeArgs()) {
+            if (jc instanceof JTypeParameter) {
+                final JTypeParameter jcp = (JTypeParameter) jc;
+                classTypes.add(jcp.getBaseType());
+            } else {
+                classTypes.add(jc);
+            }
+        }
+        return classTypes.toArray(new JClassType[0]);
     }
 
     @Override
@@ -448,5 +459,4 @@ public class JsonEncoderDecoderInstanceLocator implements EncoderDecoderLocator 
     public JClassType getListType() {
         return LIST_TYPE;
     }
-
 }
