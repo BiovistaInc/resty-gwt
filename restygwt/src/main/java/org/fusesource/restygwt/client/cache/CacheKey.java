@@ -35,8 +35,6 @@ public interface CacheKey {
 
     /**
      * string representation and effectively the cache identifier
-     *
-     * @return
      */
     @Override
     String toString();

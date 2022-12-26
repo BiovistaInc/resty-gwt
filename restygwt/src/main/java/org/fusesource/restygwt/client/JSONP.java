@@ -39,8 +39,6 @@ public @interface JSONP {
     /**
      * The name of the failure callback url parameter to send to the
      * server. The default is null
-     *
-     * @return
      */
     String failureCallbackParam() default "";
 }

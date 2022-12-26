@@ -43,7 +43,6 @@ public class RetryingCallbackFactory implements CallbackFactory {
      * helper method to create the callback with all configurations wanted
      *
      * @param method
-     * @return
      */
     @Override
     public FilterawareRequestCallback createCallback(Method method) {

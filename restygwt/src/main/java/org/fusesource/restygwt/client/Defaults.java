@@ -183,8 +183,6 @@ public class Defaults {
 
     /**
      * Returns the default dispatcher.
-     *
-     * @return
      */
     public static Dispatcher getDispatcher() {
         return dispatcher;
@@ -192,7 +190,6 @@ public class Defaults {
 
     /**
      * Gets the default ExceptionMapper
-     * @return
      */
     public static ExceptionMapper getExceptionMapper() {
         return exceptionMapper;
@@ -208,7 +205,6 @@ public class Defaults {
 
     /**
      * If true, the 'X-HTTP-Method-Override' header is set on each request.
-     * @return
      */
     public static boolean isAddXHttpMethodOverrideHeader() {
         return addXHttpMethodOverrideHeader;

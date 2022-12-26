@@ -372,8 +372,6 @@ public class Method {
 
     /**
      * get all data fields which was previously added
-     *
-     * @return
      */
     public Map<String, String> getData() {
         return data;

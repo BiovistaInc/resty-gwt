@@ -31,9 +31,6 @@ import java.util.List;
  * with this class it will be possible to take part of the generation process of restserviceimpl
  * classes. by default there are no additional resolvers registered, you can add some if wanted.
  *
- * @see
- * <a href='http://code.google.com/p/google-web-toolkit/wiki/MultiValuedConfigProperties'>MultiValuedConfigProperties
- * </a>
  * @author abalke
  *
  */

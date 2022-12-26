@@ -49,8 +49,6 @@ public @interface ModelChange {
     /**
      * Defines which Domain class is indicated to be updated.
      * In the Handler will arrive the full qualified classname.
-     *
-     * @return
      */
     @SuppressWarnings("rawtypes") Class[] domain() default {};
 }
